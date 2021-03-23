@@ -3,6 +3,7 @@ package exam;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,54 +40,15 @@ public class bmi extends HttpServlet {
 		
 		double height2 = (double)height_int /100;
 		
-		PrintWriter out = response.getWriter();
-		String html = "";
+		request.setAttribute("weight_int", weight_int);
+		request.setAttribute("height_int", height_int);
+		request.setAttribute("height2", height2);
 		
-		html += "<!DOCTYPE html>";
-		html += "<html lang=\"ko\">";
-		html += "	<head>";
-		html += "	<meta charset=\"UTF-8\">";
-		html += "	<title>Document</title>";
-		html += "</head>";
-		html += "<body>";
-		html += "	<label>bmi 결과를 출력하겠습니다.</label><br>";
-
-        double BMI = weight_int / height2; 
-        
-        html += "	<label>몸무게는"+weight_int+" 입니다.</label><br>"; 
-        html += "	<label>키는"+height_int+" 입니다.</label><br>"; 
-        html += "	<label>키는"+height2+" 입니다.</label><br>";  
-        
-        html += "	<label>bmi 수치는"+BMI+" 입니다.</label><br>";        
-        if(BMI< 20){
-        	html += "<label>저체중입니다.</label>";
-        	
-        
-        }else if(BMI>=20 && BMI<=24){
-        	html +="<label>정상체중입니다.</label>";
-        	
-                       
-        }else if(BMI>=25 && BMI<=29){
-        	html += "<label>과체중입니다.</label>";
-        	
-        }else if(BMI>=30 && BMI<=34){
-        	html += "<label>비만입니다.</label>";
-        
-        }else if(BMI >=35){
-        	html += "<label>고도비만입니다.</label>";
-        
-        }else{
-        	html += "<label>잘못 입력하셨습니다.</label>";
-        }
-        
-		html += "</body>";
-		html += "</html>";
-		
-		out.println(html);
+		//RequestDispatcher dp = request.getRequestDispatcher("res/view");
+		RequestDispatcher dp = request.getRequestDispatcher("res.jsp");
+		dp.forward(request, response);
 		
 	}
-	
-
-	}
+}
 
 

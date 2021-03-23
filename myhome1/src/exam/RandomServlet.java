@@ -37,38 +37,8 @@ public class RandomServlet extends HttpServlet {
 		
 		int start_int = Integer.parseInt(start);
 		int end_int = Integer.parseInt(end);
-		
-		PrintWriter out = response.getWriter();
-		String html = "";
-		
-		html += "<!DOCTYPE html>";
-		html += "<html lang=\"en\">";
-		html += "<head>";
-		html += "    <meta charset=\"UTF-8\">";
-		html += "    <title>Document</title>";
-		html += "</head>";
-		html += "<body>";
-		
-	
 		int num = (int)(Math.random()* end_int)+start_int;
-		
-		String color = "";
-		if( 1<= num && 20>=num) {
-			color = "#F85615";
-		}else if(21<=num && 40>= num) {
-			color = "#F8165C";
-		}else if (41<=num && 60>= num) {
-			color = "#F8156C";
-		}else if (61<=num && 80>= num) {
-			color = "#F8E114";
-		}else if (81<=num && 100>= num) {
-			color = "#F8E115";
-		}
-		html += "<h2 style=\"color:"+color+"\">"+num+"</h2>";
-		html += "</body>";
-		html += "</html>";
-		
-		out.print(html);
+		response.sendRedirect("random/res?mn="+start_int+"&mx="+end_int+"&rn="+num);
 	}
 
 }
