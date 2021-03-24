@@ -7,12 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>환영합니다.</h1>
-	<ul>
-		<li><a href ="./gugudan">구구단</a></li>
-		<li><a href ="./random">랜덤값</a></li>
-		
-	</ul>
-
+	<h1>아이디 또는 비밀번호가 틀렸습니다!</h1>
+	<p>
+		로그인 페이지로 돌아가기 <a href ="/home2/login">이동..</a>
+	</p>
 </body>
 </html>
