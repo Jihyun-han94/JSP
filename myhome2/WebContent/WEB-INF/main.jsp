@@ -13,6 +13,9 @@
 		<li><a href ="./random">랜덤값</a></li>
 		<li><a href ="./join">로그인</a></li>
 		<li><a href ="./login">로그인</a></li>
+		<li><a href ="./member">멤버</a></li>
+		<li><a href ="./board">게시판</a></li>
+		<li><a href ="./visit">방명록</a></li>
 	</ul>
 
 </body>

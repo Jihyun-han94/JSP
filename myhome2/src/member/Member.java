@@ -23,14 +23,18 @@ public class Member extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		MemberDAO member = new MemberDAO();
-		MemberVO m = member.getRecord("admin");
+		MemberVO m = member.getRecord(request.getParameter("name"));
 		member.close();
 		
-		System.out.println(m.getUserid());
-		System.out.println(m.getPassword());
-		System.out.println(m.getEmail());
-		System.out.println(m.getJoindate());
+		if(m != null) {
+			System.out.println(m.getUserid());
+			System.out.println(m.getPassword());
+			System.out.println(m.getEmail());
+			System.out.println(m.getJoindate());			
+		}else {
+			System.out.println("조회 결과가 없습니다.");
 		
+		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

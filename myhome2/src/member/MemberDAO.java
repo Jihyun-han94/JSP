@@ -19,12 +19,14 @@ public class MemberDAO {
 		try {
 			// SQL 질의문 실행
 			ResultSet res = this.stat.executeQuery(sql);
-			res.next();
-			m = new MemberVO(
-				res.getString("userid"), res.getString("password"),
-				res.getString("email"),	res.getDate("joindate")
-			);
 			
+			if(res.next()) {//읽을 내용이 있으면 true 반환
+				m = new MemberVO(
+						res.getString("userid"), res.getString("password"),
+						res.getString("email"),	res.getDate("joindate")
+						);				
+			}
+
 			res.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

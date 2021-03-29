@@ -44,7 +44,7 @@ public class MemberVO {
 
 	public Date getJoindate() {
 		return joindate;
-	}
+	}	
 
 	public void setJoindate(Date joindate) {
 		this.joindate = joindate;
