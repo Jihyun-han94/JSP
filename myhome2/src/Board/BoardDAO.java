@@ -3,7 +3,6 @@ package Board;
 import java.sql.*;
 import java.util.ArrayList;
 
-import visit.VisitVO;
 
 public class BoardDAO {
 
@@ -11,7 +10,7 @@ public class BoardDAO {
 	private PreparedStatement pstat = null;
 	
 	public BoardDAO() {
-		connect();
+		this.connect();
 	}
 	
 	
@@ -44,8 +43,10 @@ public class BoardDAO {
 		
 		try {
 			this.pstat = this.conn.prepareStatement(sql);
+		    System.out.println("쿼리문완료");
 			this.pstat.setInt(1, id); //미리 컴파일
 			ResultSet res = this.pstat.executeQuery();
+		    System.out.println("쿼리문완료");
 			if(res.next()) {
 				record = new BoardVO(
 						res.getInt("id"), res.getString("btye"), res.getString("author"),
@@ -54,7 +55,7 @@ public class BoardDAO {
 						res.getInt("view_cnt"),res.getInt("like_cnt"),res.getInt("dislike_cnt")
 						);
 			}
-			
+		    System.out.println("쿼리문완료");
 			res.close();
 		
 		} catch (SQLException e) {
@@ -94,14 +95,14 @@ public class BoardDAO {
 	}
 	public ArrayList<BoardVO> getAll(){
 		String sql ="";
-		sql += "SELECT * FROM board_t";
-		sql += "ORDER BY DESC";
+	    sql += "SELECT * FROM board_t";
+	      sql += " ORDER BY id DESC";
 		ArrayList<BoardVO> records = new ArrayList<BoardVO>();
-		
+	    System.out.println("쿼리문완료1");
 		try {
 			this.pstat = this.conn.prepareStatement(sql);
 			ResultSet res = this.pstat.executeQuery();
-			
+		    System.out.println("쿼리문완료2");
 			while(res.next()) {
 				records.add(new BoardVO(
 						res.getInt("id"), res.getString("btye"), res.getString("author"),
@@ -110,24 +111,27 @@ public class BoardDAO {
 						res.getInt("view_cnt"),res.getInt("like_cnt"),res.getInt("dislike_cnt")
 						));
 			}
+			res.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    System.out.println("쿼리문완료3");
 		return records;
 	}
 	
 	public int saveData(BoardVO data) {
 		int result = 0;
 		String sql ="";
-		sql += "INSERT INTO board_t(id, btye, author, title, context, create_date, update_date,view_cnt, like_cnt)";
-		sql += "VALUES(board_seq.NEXTVAL,?,?,?,SYSDATE,SYSDATE,0,0,0)";
+	      sql += "INSERT INTO board_t (id, btye, author, title, context)";
+	      sql += "     VALUES(board_seq.NEXTVAL, ?, ?, ?, ?)";
 		
 		try {
 			this.pstat = this.conn.prepareStatement(sql);
-			this.pstat.setString(1, data.getAuthor());
-			this.pstat.setString(2, data.getTitle());
-			this.pstat.setString(3, data.getContext());
+			this.pstat.setString(1, data.getBtye());
+			this.pstat.setString(2, data.getAuthor());
+			this.pstat.setString(3, data.getTitle());
+			this.pstat.setString(4, data.getContext());
+			System.out.println("저장완료");
 			
 			result = this.pstat.executeUpdate(); // 저장 처리가 완료되면 1 반환
 			System.out.println(result);
@@ -137,17 +141,44 @@ public class BoardDAO {
 		}
 		return result;
 	}
+	 public int updateData(BoardVO data) {
+	      int result = 0;
+	      String sql = "";
+	      sql += "UPDATE board_t";
+	      sql += "   SET context=?";
+	      sql += "     , author=?";
+	      sql += "     , title=?";
+	      sql += "     , btye=?";
+	      sql += " WHERE id=?";
+	      
+	      try {
+	         this.pstat = this.conn.prepareStatement(sql);
+	         this.pstat.setString(1, data.getContext());
+	         this.pstat.setString(2, data.getAuthor());
+	         this.pstat.setString(3, data.getTitle());
+	         this.pstat.setString(4, data.getBtye());
+	         this.pstat.setInt(5, data.getId());
+	         
+	         result = this.pstat.executeUpdate();    // 저장 처리가 완료 되면 1 반환
+	         System.out.println("업데이트완료!!!!!!!");
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+	      return result;
+	   }
+	 
 	public int deleteData(int id) {
 		int result = 0;
 		String sql = "";
-		sql += "DELETE FROM board_t";
-		sql += "WHERE ID =?";
+	    sql += "DELETE FROM board_t";
+	    sql += " WHERE id = ?";
 		
 		try {
 			this.pstat = this.conn.prepareStatement(sql);
 			this.pstat.setInt(1, id);
 			
 			result = this.pstat.executeUpdate();
+			System.out.println("deltedata 완료");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,5 +193,8 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 	}
+
+
+	
 	
 }

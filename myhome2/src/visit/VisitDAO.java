@@ -35,6 +35,7 @@ public class VisitDAO {
    
    public VisitVO getRecord(int id) {
       String sql = "SELECT * FROM visit_t WHERE id = ?";
+  
       VisitVO record = null;
       try {
          this.pstat = this.conn.prepareStatement(sql);

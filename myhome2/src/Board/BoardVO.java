@@ -14,6 +14,19 @@ public class BoardVO {
 	private int like_cnt ;
 	private int dislike_cnt ;
 	
+	public BoardVO(String author, String btye, String title, String context) {
+		this.id = -1;
+		this.author = author;
+		this.title= title;
+		this.context = context;
+		this.btye = btye;
+		this.create_date = null;
+		this.update_date= null ;
+		this.view_cnt = 0 ;
+		this.like_cnt = 0;
+		this.dislike_cnt = 0;
+	}
+	
 	public BoardVO(int id, String btye, String author, String title,
 			String context, Date create_date, Date update_date,
 			int view_cnt, int like_cnt, int dislike_cnt) {
